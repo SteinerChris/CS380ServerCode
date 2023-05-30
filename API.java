@@ -12,11 +12,19 @@ class API {
 
 	public static void start(int portNum) throws IOException, InterruptedException {
 		serverSocket = new ServerSocket(portNum);
+		Scanner scan = new Scanner(System.in);
+		System.out.println("starting");
 		while (true) {
 			new ConnectionHandler(serverSocket.accept()).start();
 			// prevent CPU overload
 			Thread.sleep(1);
+			
+			//if something is typed, finish
+			if(scan.hasNext()) {
+				break;
+			}
 		}
+		System.out.println("stopping");
 
 	}
 

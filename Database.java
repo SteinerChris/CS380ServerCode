@@ -59,7 +59,7 @@ public class Database {
     /**
      * returns true if the username corresponds to a username in the database, and the hash of the password matches
      * @param username
-     * @param password
+     * @param password (should already be hashed because we don't want to send an unhashed password over the internet.
      * @return
      */
     public static boolean verifyCredentials(String username, String password){
@@ -70,7 +70,7 @@ public class Database {
             //printResultSet(res);
             res.next();
             //System.out.println("Password is: "+ sha256);
-            if(!res.getString("password").equals(sha256(password))) return false;
+            if(!res.getString("password").equals((password))) return false;
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -92,7 +92,7 @@ public class Database {
      * returns false if such a user already exists of if the username/password is invalid
      * puts entries into the database under the logins table with the username and password
      * @param username
-     * @param password
+     * @param password (hashed)
      * @return
      */
     public static boolean createUser(String username, String password){
@@ -105,8 +105,8 @@ public class Database {
 
             //if user already exists with same name, can't create user
             if(res.next()) return  false;
-
-            executeUpdate("INSERT INTO logins (username, password) VALUES(?, ?);","insertuser", username, sha256(password));
+            
+            executeUpdate("INSERT INTO logins (username, password) VALUES(?, ?);","insertuser", username, (password));
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
