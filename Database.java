@@ -113,7 +113,17 @@ public class Database {
             return false;
         }
 
-
+    }
+    
+    public static String getPreferences(String username) {
+    	try {
+    		ResultSet res = executeQuery("SELECT * from logins where username=?;","get prefs", username);
+    		res.next();
+    		return res.getString(res.findColumn("userPrefs"));
+    	}catch (SQLException e) {
+    		e.printStackTrace();
+    		return null;
+    	}
     }
 
     /**

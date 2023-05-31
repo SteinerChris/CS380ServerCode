@@ -15,16 +15,17 @@ class API {
 		Scanner scan = new Scanner(System.in);
 		System.out.println("starting");
 		while (true) {
+			System.out.println("scanning more");
 			new ConnectionHandler(serverSocket.accept()).start();
+			System.out.println("thread is done?");
 			// prevent CPU overload
 			Thread.sleep(1);
-			
-			//if something is typed, finish
-			if(scan.hasNext()) {
-				break;
-			}
+			// if something is typed, finish
+			// if(scan.hasNext()) {
+			// break;
+			// }
 		}
-		System.out.println("stopping");
+		// System.out.println("stopping");
 
 	}
 
@@ -43,30 +44,35 @@ class API {
 				in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 				String request;
 				while ((request = in.readLine()) != null) {
-					System.out.println("request is: "+request);
+					System.out.println("request is: " + request);
 					Scanner scan = new Scanner(request);
-					if(scan.hasNext()) {
-						
-					String token = scan.next();
-					if (token.equals("login")) {
-						System.out.println("Doing login");
-						String username = scan.next(), password=scan.next();
-						System.out.println("username = "+username + " password = "+password);
-						boolean loggedIn = Database.verifyCredentials(username,password);
-						out.println(loggedIn);
-					} else if (token.equals("createUser")) {
-						System.out.println("creating user");
-						String username = scan.next(), password=scan.next();
-						out.println(Database.createUser(username, password));
-					}
-					}else {
+					if (scan.hasNext()) {
+
+						String token = scan.next();
+						if (token.equals("login")) {
+							System.out.println("Doing login");
+							String username = scan.next(), password = scan.next();
+							System.out.println("username = " + username + " password = " + password);
+							boolean loggedIn = Database.verifyCredentials(username, password);
+							out.println(loggedIn);
+						} else if (token.equals("createUser")) {
+							System.out.println("creating user");
+							String username = scan.next(), password = scan.next();
+							out.println(Database.createUser(username, password));
+						} else if (token.equals("preferences")) {
+							System.out.println("Doing preferences");
+							out.println(Database.getPreferences(scan.next()));
+						}
+					} else {
 						break;
 					}
 					scan.close();
 				}
+				System.out.println("closing");
 				in.close();
 				out.close();
 				clientSocket.close();
+
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -75,11 +81,11 @@ class API {
 		}
 
 	}
-	
+
 	public static void main(String[] args) {
-		//test the database
-		//System.out.println((Database.verifyCredentials("Steiner3","123")));
-		
+		// test the database
+		// System.out.println((Database.verifyCredentials("Steiner3","123")));
+
 		try {
 			start(6666);
 		} catch (IOException e) {
@@ -89,8 +95,7 @@ class API {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 	}
 
 }
