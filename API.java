@@ -62,7 +62,11 @@ class API {
 						} else if (token.equals("preferences")) {
 							System.out.println("Doing preferences");
 							out.println(Database.getPreferences(scan.next()));
+						}else if (token.equals("setPreferences")) {
+							System.out.println("setting preferences ");
+							out.println(Database.setPreferences(scan.next(),scan.next()));
 						}
+						
 					} else {
 						break;
 					}

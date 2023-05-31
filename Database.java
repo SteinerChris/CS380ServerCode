@@ -115,6 +115,11 @@ public class Database {
 
     }
     
+    /**
+     * gets the preferences of the user with username username
+     * @param username
+     * @return
+     */
     public static String getPreferences(String username) {
     	try {
     		ResultSet res = executeQuery("SELECT * from logins where username=?;","get prefs", username);
@@ -124,6 +129,11 @@ public class Database {
     		e.printStackTrace();
     		return null;
     	}
+    }
+    
+    public static boolean setPreferences(String username, String preferences) {
+    	executeUpdate("UPDATE employees SET userPrefs =? WHERE username=?;","set prefs", preferences, username);
+		return true;
     }
 
     /**
