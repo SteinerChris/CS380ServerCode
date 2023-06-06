@@ -32,9 +32,9 @@ public class Database {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        String url = "jdbc:mysql://sql9619545@sql9.freemysqlhosting.net/sql9619545";
-        String userName = "sql9619545";
-        String pass = "TALaShDLMD";
+        String url = "jdbc:mysql://sql9623301@sql9.freemysqlhosting.net/sql9623301";
+        String userName = "sql9623301";
+        String pass = "3JgAGb5DTg";
 
         try {
             con = DriverManager.getConnection(url, userName, pass);
@@ -132,7 +132,7 @@ public class Database {
     }
     
     public static boolean setPreferences(String username, String preferences) {
-    	executeUpdate("UPDATE employees SET userPrefs =? WHERE username=?;","set prefs", preferences, username);
+    	executeUpdate("UPDATE logins SET userPrefs =? WHERE username=?;","set prefs", preferences, username);
 		return true;
     }
 
